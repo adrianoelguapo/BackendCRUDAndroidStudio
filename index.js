@@ -59,7 +59,7 @@ app.post("/rappers", async (req, res) => {
 });
 
 // DELETE /rappers/:id
-app.delete("/rappers/:id", async (req, res) => {
+app.delete("/rappers/borrar/:id", async (req, res) => {
     try {
         const id = parseInt(req.params.id);
         const collection = db.collection("cards");
@@ -118,7 +118,7 @@ app.get("/rappers/name/:name", async (req, res) => {
 });
 
 // PUT /rappers/:id
-app.put("/rappers/:id", async (req, res) => {
+app.put("/rappers/modificar/:id", async (req, res) => {
     try {
         const id = parseInt(req.params.id);
         const { aka, name, album, song } = req.body;
