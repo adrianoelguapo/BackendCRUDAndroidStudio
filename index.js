@@ -31,7 +31,7 @@ app.use(cors({
 }));
 
 // Configurar puerto de escucha
-app.listen(3000,'0,0,0,0',() => {
+app.listen(3000,() => {
     console.log("Escucha en el puerto 3000")
 });
 
