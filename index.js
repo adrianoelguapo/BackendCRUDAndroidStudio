@@ -1,5 +1,6 @@
 const express = require("express");
 const { MongoClient } = require("mongodb");
+const cors = require("cors");
 
 // Conexión a MongoDB
 const uri = "mongodb+srv://admin:123@cluster0.tz018.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -24,9 +25,13 @@ const app = express();
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
+app.use(cors({
+    origin: ['http://localhost:3000', 'http://172.20.10.2:3000', 'http://10.0.2.2:3000'],
+    credentials: true
+}));
 
 // Configurar puerto de escucha
-app.listen(3000,() => {
+app.listen(3000,'0,0,0,0',() => {
     console.log("Escucha en el puerto 3000")
 });
 
