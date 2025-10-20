@@ -2,13 +2,11 @@ const express = require("express");
 const { MongoClient } = require("mongodb");
 const cors = require("cors");
 
-// Conexión a MongoDB
 const uri = "mongodb+srv://admin:123@cluster0.tz018.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri);
 const dbName = "backend_crud_android_studio";
 let db;
 
-// Conectar a la base de datos
 async function connectDB() {
     try {
         await client.connect();
@@ -19,23 +17,19 @@ async function connectDB() {
     }
 }
 
-// Crear instancia de Express
 const app = express();
 
-// Configurar CORS más permisivo para desarrollo
 app.use(cors({
     origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
 }));
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({extended: true}));
 
-// Configurar puerto de escucha
 app.listen(3000, '0.0.0.0', () => {
-    console.log("✅ Servidor escuchando en http://0.0.0.0:3000");
+    console.log("Servidor escuchando en http://0.0.0.0:3000");
 });
 
 // GET /rappers
@@ -68,7 +62,7 @@ app.post("/rappers", async (req, res) => {
     }
 });
 
-// DELETE /rappers/borrar/:id - MEJORADO
+// DELETE /rappers/borrar/:id
 app.delete("/rappers/borrar/:id", async (req, res) => {
     try {
         const id = parseInt(req.params.id);
