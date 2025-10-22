@@ -37,11 +37,10 @@ app.get("/rappers", async (req, res) => {
     try {
         const collection = db.collection("cards");
         const rappers = await collection.find({}).toArray();
-        console.log(`📊 Enviando ${rappers.length} rappers al cliente`);
+        
         res.json(rappers);
     } catch (error) {
-        console.error("❌ Error al obtener los datos:", error);
-        res.status(500).json({ error: "Error al obtener los datos" });
+        res.status(500).json({ error: "Ha habido un error al obtener los datos" });
     }
 });
 
@@ -56,9 +55,9 @@ app.post("/rappers", async (req, res) => {
 
         const newRapper = { id, aka, name, album, song };
         await collection.insertOne(newRapper);
-        res.status(201).json({ message: "Datos insertados correctamente" });
+        res.status(201).json({ message: "Los datos han sido insertados correctamente" });
     } catch (error) {
-        res.status(500).json({ error: "Error al insertar los datos" });
+        res.status(500).json({ error: "Ha habido un error al insertar los datos" });
     }
 });
 
@@ -66,21 +65,19 @@ app.post("/rappers", async (req, res) => {
 app.delete("/rappers/borrar/:id", async (req, res) => {
     try {
         const id = parseInt(req.params.id);
-        console.log(`🗑️ Intentando eliminar rapper con ID: ${id}`);
-        
         const collection = db.collection("cards");
         const result = await collection.deleteOne({ id });
 
         if (result.deletedCount === 0) {
-            console.log(`❌ Rapper con ID ${id} no encontrado`);
-            return res.status(404).json({ error: "Rapper no encontrado" });
+            console.log(`El rapero con ID ${id} no ha sido encontrado`);
+            return res.status(404).json({ error: "No se ha encontrado el rapero" });
         } else {
-            console.log(`✅ Rapper con ID ${id} eliminado correctamente`);
-            return res.json({ message: "Rapper eliminado correctamente" });
+            console.log(`El rapero con ID ${id} ha sido eliminado`);
+            return res.json({ message: "El rapero ha sido eliminado correctamente" });
         }
     } catch (error) {
-        console.error("❌ Error al eliminar los datos:", error);
-        res.status(500).json({ error: "Error al eliminar los datos" });
+        console.error("Ha habido al eliminar los datos:", error);
+        res.status(500).json({ error: "Ha habido un error al eliminar los datos" });
     }
 });
 
@@ -95,13 +92,13 @@ app.get("/rappers/aka/:aka", async (req, res) => {
     const rappers = await collection.find({ aka: { $regex: regex } }).toArray();
 
     if (rappers.length === 0) {
-      return res.status(404).json({ error: "Rapper no encontrado" });
+      return res.status(404).json({ error: "El rapero que buscas no ha sido encontrado" });
     }
 
     res.json(rappers);
   } catch (error) {
-    console.error("Error al obtener los datos:", error);
-    res.status(500).json({ error: "Error al obtener los datos" });
+    console.error("Ha habido un error al obtener los datos:", error);
+    res.status(500).json({ error: "Ha habido un error al obtener los datos" });
   }
 });
 
@@ -116,13 +113,13 @@ app.get("/rappers/name/:name", async (req, res) => {
         const rappers = await collection.find({ name: { $regex: regex } }).toArray();
 
         if (rappers.length === 0) {
-            return res.status(404).json({ error: "Rapper no encontrado" });
+            return res.status(404).json({ error: "El rapero que buscas no ha sido encontrado" });
         }
 
         res.json(rappers);
     } catch (error) {
-        console.error("Error al obtener los datos:", error);
-        res.status(500).json({ error: "Error al obtener los datos" });
+        console.error("Ha habido un error al obtener los datos:", error);
+        res.status(500).json({ error: "Ha habido un error al obtener los datos" });
     }
 });
 
@@ -138,12 +135,12 @@ app.put("/rappers/modificar/:id", async (req, res) => {
         );
 
         if (result.matchedCount === 0) {
-            return res.status(404).json({ error: "Rapper no encontrado" });
+            return res.status(404).json({ error: "No se ha encontrado el rapero" });
         }
         
-        res.json({ message: "Datos actualizados correctamente" });
+        res.json({ message: "Los datos del rapero han sido actualizados correctamente" });
     } catch (error) {
-        res.status(500).json({ error: "Error al actualizar los datos" });
+        res.status(500).json({ error: "Ha habido un error al actualizar los datos" });
     }
 });
 
